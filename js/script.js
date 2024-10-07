@@ -47,19 +47,25 @@ function buscarPeliculas() {
     mostrarResultados(resultados); // Llama a la función para mostrar los resultados en la interfaz
 }
 
-// Función para mostrar resultados de búsqueda
 function mostrarResultados(resultados) {
     const lista = document.getElementById('lista');
     lista.innerHTML = ''; // Limpia resultados anteriores
+
+    const star = '<span class="fa fa-star checked"></span>';
 
     // Recorre cada película en los resultados y crea un elemento "lista" para cada una
     resultados.forEach(pelicula => {
         const li = document.createElement('li');
         li.classList.add('list-group-item');
+        
+        // Crea el HTML de las estrellas según la calificación
+        const estrellasHTML = `<span class="elementStars">${star.repeat(Math.round(pelicula.vote_average / 2))}</span>`;
+        
         li.innerHTML = `
-            <h5>${pelicula.title} <span class="badge bg-secondary">${pelicula.vote_average}</span></h5>
+            <h5>${pelicula.title} ${estrellasHTML}</h5>
             <p>${pelicula.tagline}</p>
         `;
+        
         li.addEventListener('click', () => mostrarDetalles(pelicula)); // Evento para mostrar los detalles al hacer click
         lista.appendChild(li); // Añade el elemento de lista a la lista en la interfaz
     });
